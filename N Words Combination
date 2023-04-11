@@ -1,0 +1,53 @@
+'''
+
+N Words Combination
+Given a sentence as input, print all the unique combinations of N words in lexicographical order.
+Input
+The first line of input will be containing a sentence.
+The second line of input will contain a positive integer.
+Output
+The output should be multiple lines, each line containing the unique combination of N words in lexicographical order.
+Explanation
+For example, if the given sentence is "apple is a fruit", and N is 3, the possible unique combination of three words are (a, apple, fruit), (a, apple, is), (a, fruit, is), (apple, fruit, is). So the output should be
+a apple fruit
+a apple is a fruit is
+apple fruit is
+
+Sample Input 1
+apple is a fruit
+3
+
+Sample Output 1
+a apple fruit
+a apple is
+a fruit is
+apple fruit is
+
+Sample Input 2
+raju plays cricket
+2
+
+Sample Output 2
+cricket plays
+cricket raju
+plays raju
+
+
+'''
+
+n=input().split()
+n.sort()
+m=int(input())
+new=[]
+for i in range(m):
+    new_combinations = []
+    for combination in n:
+        for item in items:
+            if (combination and item > combination[-1]) or len(combination) == 0:
+                new_combinations.append(combination + [item])
+        old_combinations = new_combinations
+new=set(new)
+new=list(new)
+new.sort()
+for i in new:
+    print(i)
