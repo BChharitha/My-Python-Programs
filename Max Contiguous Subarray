@@ -1,0 +1,53 @@
+'''
+Given a list of integers write a progra to identiy contiguous ssub-list that has the largest sum and print the sub-list. Any non-empty slice of the list with step size 1 can be considered as contiguous sub-list.
+INPUT:
+The input will contain space-separated integers, denoting the elemens of the list.
+OUTPUT:
+The output should be space-separated integers.
+for example, if the given list is [2,-4,5,-1,2,-3], then all the possible ccontiguous sub-lists will be,
+[2]
+[2,-4]
+[2,-4,5]
+[2,-4,5,-1]
+[2,-4,5,-1,2]
+[2,-4,5,-1,2,-3]
+
+
+[-4]
+[-4,5]
+[-4,5,-1]
+[-4,5,-1,2]
+[-4,5,-1,2,-3]
+
+
+[5]
+[5,-1]
+[5,-1,2]
+[5,-1,2,-3]
+
+
+[-1]
+[-1,2]
+[-1,2,-3]
+
+
+[2]
+[2,-3]
+
+[-3]
+
+Among the above contiguous sub-list, the contiguous sub-list [5,-1,2] has the largest sum which is 6. So the output should be 5 -1 2.
+'''
+n = list(map(int, input().split()))
+if not n:
+    print(0)
+else:
+    sum_dict={}
+    for i in range(len(n)):
+        for j in range(i+1,len(n)+1):
+            sum_dict[tuple(n[i:j])] = sum(n[i:j])
+
+    keys=list(sum_dict.keys())
+    values=list(sum_dict.values())
+    max_sum_index = values.index(max(values))
+    print(*keys[max_sum_index])
