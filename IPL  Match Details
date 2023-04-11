@@ -1,0 +1,98 @@
+'''
+IPL Match Details
+Write a program that reads all the match outcomes and summarizes the information of all the matches. Points are given to the teams based on the outcome of the match.
+A win earns a team 3 points. A draw earns 1. A loss earns 0.
+The following information is expected:
+MP: Matches Played
+W: Matches Won
+D: Matches Drawn (Tied)
+L: Matches Lost
+P: Points
+The team information should be displayed in descending order of points.
+Input
+The first line contains a single integer N, denoting the total no. of matches played.
+The following N lines contain outcomes of N matches.
+Each of those lines has information on the teams (T1, T2) which played and the outcome (O) in format T1,T2,O.
+The outcome (O) is one of 'win', 'loss', 'draw' and refers to the first team listed.
+See Sample Input/Output for better understanding:
+The team name may contain spaces
+Output
+The output should contain summarized information of all the matches in a format similar to 'Team: CSK, Matches Played: 4, Won: 2, Lost: 1, Draw: 1, Points: 7' for each team in a new line. If there are no teams to print in summary, print "No Output".
+Constraints
+Names of teams may contain spaces but will be less than 24 characters
+100 >= N >= 0
+
+Sample Input
+6
+CSK; RR; Loss
+RR; DD; draw
+MI;KKR; win
+KKR; RR; Loss
+CSK; DD; draw
+MI; DO; draw
+
+Sample Output
+Team: RR, Matches Played: 3, Won: 2, Lost: 2, Draw: 1, Points: 7
+Team:MI, Matches Played: 2, Won: 1, Lost: 2, Draw: 1, Points: 4
+Team: DD, Matches Played: 3, Won: 0, Lost: 2, Draw: 3, Points: 3
+Team: CSK, Matches Played: 2, Won: 0, Lost: 2, Draw: 1, Points: 1
+Team: KKR, Matches Played: 2, Won: 0, Lost: 2, Draw: 0, Points: 0
+'''
+
+n=int(input())
+if n==0:
+    print("No Output")
+data=[]
+for i in range(n):
+    k=input().split(";")
+    data.append(k)
+set_a=[]
+for i in data:
+    set_a += i[:2]
+set_a=set(set_a)
+set_a=list(set_a)
+team_played={}
+team_win={}
+team_lost={}
+team_draw={}
+team_points={}
+for i in set_a:
+    team_played[i]=0
+    team_win[i]=0
+    team_lost[i]=0
+    team_draw[i]=0
+    team_points[i]=0
+for i in data:
+    for j in set_a:
+        if j in i:
+            team_played[j]+=1
+            if j==i[0]:
+                if i[2]=="loss":
+                    team_lost[j]+=1
+                elif i[2]=="draw":
+                    team_draw[j]+=1
+                elif i[2]=="win":
+                    team_win[j]+=1
+                
+            elif j==i[1]:
+                if i[2]=="loss":
+                    team_win[j]+=1
+                elif i[2]=="draw":
+                    team_draw[j]+=1
+                elif i[2]=="win":
+                    team_lost[j]+=1
+points_list=[]
+for i in set_a:
+    team_points[i]=(team_win[i]*3)+(team_draw[i]*1)
+    points_list.append(team_points[i])
+result=[]
+for i in set_a:
+    result.append("Team: "+i+", Matches Played: "+str(team_played[i])+", Won: "+str(team_win[i])+", Lost: "+str(team_lost[i])+", Draw: "+str(team_draw[i])+", Points: "+str(team_points[i]))
+
+for i in range(len(result)):
+    maxi=max(points_list)
+    for j in result:
+        new=str(j)
+        if maxi==int(new[len(new)-1]):
+            print(new)
+            points_list.remove(maxi)
